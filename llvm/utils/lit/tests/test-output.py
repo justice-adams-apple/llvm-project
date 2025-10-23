@@ -6,7 +6,7 @@
 # CHECK: "elapsed"
 # CHECK-NEXT: "tests": [
 # CHECK-NEXT:   {
-# CHECK-NEXT:     "code": "PASS",
+# CHECK-NEXT:     "code": "THIS_WILL_FAIL",
 # CHECK-NEXT:     "elapsed": {{[-+0-9.eE]+}},
 # CHECK-NEXT:     "metrics": {
 # CHECK-NEXT:       "value0": 1,
