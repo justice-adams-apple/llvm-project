@@ -10,21 +10,26 @@ library identifier: "zorg-shared-lib@${branchName}",
 
 clangPipeline(
     jobName: env.JOB_NAME,
+    stages: ['checkout', 'build'],
     buildConfig: [
         stage: 1,
         build_type: 'cmake',
+        build_target: 'all',
         cmake_type: 'default',
         assertions: true,
-        projects: 'clang',
-        timeout: 150,
-        incremental: true
+        timeout: 360,
+        incremental: false,
+        cmake_flags: [
+            "-DLLVM_ENABLE_EXPENSIVE_CHECKS=ON",
+            "-DLIBCXX_ENABLE_SHARED=OFF",
+            "-DLIBCXX_ENABLE_STATIC=OFF",
+            "-DLIBCXX_INCLUDE_TESTS=OFF",
+            "-DLIBCXX_ENABLE_EXPERIMENTAL_LIBRARY=OFF"
+        ]
     ],
     testConfig: [
-        test_type: 'testlong',
-        timeout: 150,
         junit_patterns: [
             "clang-build/**/testresults.xunit.xml"
         ]
     ]
 )
-
