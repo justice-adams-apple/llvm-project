@@ -1,4 +1,4 @@
-//ToDo: This will go away with the global shared library
+//ToDo: use main branch
 branchName = 'jadams/unified-templated-test'
 
 library identifier: "zorg-shared-lib@${branchName}",
@@ -19,7 +19,6 @@ clangPipeline(
         timeout: 120,
         incremental: false
     ],
-
     testConfig: [
         test_type: 'testlong',
         timeout: 120,
