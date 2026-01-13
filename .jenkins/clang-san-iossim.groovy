@@ -15,7 +15,8 @@ clangPipeline(
         build_type: 'cmake',
         cmake_type: 'RelWithDebInfo',
         assertions: true,
-        projects: 'clang;clang-tools-extra;compiler-rt',
+        projects: 'clang;clang-tools-extra',
+        runtimes: 'compiler-rt',
         timeout: 120,
         incremental: false,
         env_vars: [
@@ -29,7 +30,7 @@ clangPipeline(
         ],
         custom_script: '''
             EXIT_CODE=0
-            export COMPILER_RT_TEST_DIR="$WORKSPACE/clang-build/tools/clang/runtime/compiler-rt-bins/test"
+            export COMPILER_RT_TEST_DIR="$WORKSPACE/clang-build/runtimes/runtimes-bins/compiler-rt/test"
 
             cd $COMPILER_RT_TEST_DIR/asan && python3 $WORKSPACE/clang-build/./bin/llvm-lit \
               --xunit-xml-output=testresults-asan-IOSSimX86_64Config.xunit.xml -v -vv --timeout=600 \

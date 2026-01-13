@@ -15,7 +15,8 @@ clangPipeline(
         build_type: 'cmake',
         cmake_type: 'RelWithDebInfo',
         assertions: true,
-        projects: 'clang;clang-tools-extra;compiler-rt',
+        projects: 'clang;clang-tools-extra',
+        runtimes: 'compiler-rt',
         timeout: 120,
         incremental: false
     ],
