@@ -25,8 +25,10 @@ clangPipeline(
         sanitizer: 'Thread',
         incremental: false,
         cmake_flags: [
-            "-DLLVM_BUILD_RUNTIME=OFF",
-            "-DDYLD_LIBRARY_PATH=\$WORKSPACE/host-compiler/lib/"
+            "-DLLVM_BUILD_RUNTIME=OFF"
+        ],
+        env_vars: [
+            "DYLD_LIBRARY_PATH": "\$WORKSPACE/host-compiler/lib/"
         ]
     ]
 )
