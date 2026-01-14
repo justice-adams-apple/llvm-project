@@ -18,7 +18,7 @@ clangPipeline(
         cmake_type: 'RelWithDebInfo',
         projects: 'clang;clang-tools-extra',
         test_timeout: 2400, // individual test timeout in seconds
-        timeout: 1440 // build stage timeout in minutes
+        timeout: 1440, // build stage timeout in minutes
         incremental: false,
         sanitizer: 'Address;Undefined',
         cmake_flags: [
