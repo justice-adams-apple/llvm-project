@@ -10,6 +10,7 @@ library identifier: "zorg-shared-lib@${branchName}",
 
 clangPipeline(
     jobName: env.JOB_NAME,
+    zorgBranch: branchName,
     buildConfig: [
         stage: 1,
         build_type: 'cmake',

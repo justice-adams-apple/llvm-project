@@ -10,6 +10,7 @@ library identifier: "zorg-shared-lib@${branchName}",
 
 clangPipeline(
     jobName: env.JOB_NAME,
+    zorgBranch: branchName,
     stages: ['checkout', 'fetch', 'build'],
     buildConfig: [
         stage: 2,
