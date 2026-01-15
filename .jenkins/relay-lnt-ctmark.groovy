@@ -9,6 +9,8 @@ library identifier: "zorg-shared-lib@${branchName}",
         ])
 
 relay.pipeline([
-    "Green-Dragon-Testing/clang-stage2-cmake-RgSan",
-    "Green-Dragon-Testing/clang-stage2-cmake-RgTSan"
+    "Green-Dragon-Testing/lnt-ctmark-aarch64-O0-g",
+    "Green-Dragon-Testing/lnt-ctmark-aarch64-O3-flto",
+    "Green-Dragon-Testing/lnt-ctmark-aarch64-Os",
+    "Green-Dragon-Testing/lnt-ctmark-aarch64-Oz"
 ])
