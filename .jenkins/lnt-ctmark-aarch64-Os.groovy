@@ -8,7 +8,7 @@ library identifier: "zorg-shared-lib@${branchName}",
             credentialsId: scm.userRemoteConfigs[0].credentialsId
         ])
 
-common.testsuite_pipeline(label: 'macos-x86_64') {
+common.testsuite_pipeline(label: 'macos-x86_64-lnt') { // ToDo: Change label
     timeout(30) {
         sh """
 LNT_FLAGS+=" -C config/tasks/cmake/caches/target-arm64-iphoneos.cmake"
