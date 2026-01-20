@@ -58,12 +58,12 @@ pipeline {
                     dir(params.REPOSITORY) {
                         // Clone or checkout the repository
                         checkout([$class: 'GitSCM', branches: [
-                            [name: "main"]
+                            [name: params.GOOD_COMMIT]
                         ], extensions: [
                             [$class: 'CloneOption',
                             timeout: 30]
                         ], userRemoteConfigs: [
-                            [url: 'https://github.com/llvm/llvm-project.git']
+                            [url: 'https://github.com/justice-adams-apple/llvm-project.git'] //todo: change URL
                         ]])
 
                         // Verify commits exist
@@ -117,7 +117,7 @@ pipeline {
                             def startTime = System.currentTimeMillis()
 
                             def jobResult = build(
-                                job: "Green-Dragon/bisect/${params.TEST_JOB_NAME}",
+                                job: "Green-Dragon-Testing/bisect/${params.TEST_JOB_NAME}",
                                 parameters: [
                                     string(name: 'GIT_SHA', value: stepInfo.commit),
                                     string(name: 'BISECT_GOOD', value: stepInfo.bisection_range.current_good),
