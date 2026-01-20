@@ -9,6 +9,10 @@ library identifier: "zorg-shared-lib@${branchName}",
         ])
 
 pipeline {
+    options {
+        skipDefaultCheckout()
+    }
+
     agent {
         node {
             label 'macos-x86_64-lnt' // ToDo: Change label
