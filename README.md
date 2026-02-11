@@ -6,7 +6,7 @@
 
 Welcome to the LLVM project!
 
-This repository contains the source code for LLVM, a toolkit for the
+This repository contains the source code for LLVM, a toolkit for the 
 construction of highly optimized compilers, optimizers, and run-time
 environments.
 
