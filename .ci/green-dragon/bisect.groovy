@@ -40,6 +40,8 @@ pipeline {
             description: 'Repository to bisect'
         )
         booleanParam(name: 'RUN_TESTS', defaultValue: true, description: 'Run tests as part of bisection. Set to False if bisecting a build failure.')
+        string(name: 'LIT_TEST_FILTER', defaultValue: '', description: 'Specific LIT test to bisect (path relative to llvm-project root, e.g. clang/test/CodeGen/foo.c). Leave empty to use the full job result.')
+        string(name: 'TEST_REPEAT_COUNT', defaultValue: '3', description: 'Number of times to run the LIT test per commit. All runs must pass for the commit to be marked GOOD — a single failure marks it BAD.')
         string(name: 'SESSION_ID', description: 'Session ID to continue (optional)', defaultValue: '')
         booleanParam(name: 'DRY_RUN', defaultValue: false, description: 'Dry run mode')
         string(name: 'REQUESTOR', description: 'Email address of the requestor', defaultValue: '')
@@ -93,7 +95,9 @@ pipeline {
                         params.BAD_COMMIT,
                         params.TEST_JOB_NAME,
                         params.REPOSITORY,
-                        params.SESSION_ID ?: null
+                        params.SESSION_ID ?: null,
+                        params.LIT_TEST_FILTER,
+                        params.TEST_REPEAT_COUNT.toInteger()
                     )
                 }
             }
@@ -115,7 +119,13 @@ pipeline {
                         }
 
                         // Show restart instructions
-                        bisectionManager.showRestartInstructions(stepNumber, params.TEST_JOB_NAME, params.REPOSITORY)
+                        bisectionManager.showRestartInstructions(
+                            stepNumber,
+                            params.TEST_JOB_NAME,
+                            params.REPOSITORY,
+                            params.LIT_TEST_FILTER,
+                            params.TEST_REPEAT_COUNT.toInteger()
+                        )
 
                         if (params.DRY_RUN) {
                             def simulatedResult = (stepNumber % 2 == 0) ? "SUCCESS" : "FAILURE"
@@ -133,7 +143,9 @@ pipeline {
                                     string(name: 'BISECT_BAD', value: stepInfo.bisection_range.current_bad),
                                     booleanParam(name: 'IS_BISECT_JOB', value: true),
                                     booleanParam(name: 'SKIP_TESTS', value: !params.RUN_TESTS),
-                                    booleanParam(name: 'SKIP_TRIGGER', value: true)
+                                    booleanParam(name: 'SKIP_TRIGGER', value: true),
+                                    string(name: 'LIT_TEST_FILTER', value: params.LIT_TEST_FILTER),
+                                    string(name: 'TEST_REPEAT_COUNT', value: params.TEST_REPEAT_COUNT)
                                 ],
                                 propagate: false,
                                 wait: true
