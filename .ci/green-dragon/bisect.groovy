@@ -1,4 +1,4 @@
-branchName = 'main'
+branchName = 'jadams/bisection-filter'
 
 library identifier: "zorg-shared-lib@${branchName}",
         retriever: modernSCM([
@@ -136,7 +136,7 @@ pipeline {
                             def startTime = System.currentTimeMillis()
 
                             def jobResult = build(
-                                job: "llvm.org/bisect/${params.TEST_JOB_NAME}",
+                                job: "Green-Dragon-Testing/bisect/${params.TEST_JOB_NAME}",
                                 parameters: [
                                     string(name: 'GIT_SHA', value: stepInfo.commit),
                                     string(name: 'BISECT_GOOD', value: stepInfo.bisection_range.current_good),

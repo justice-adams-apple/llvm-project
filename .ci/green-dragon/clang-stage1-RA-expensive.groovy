@@ -1,4 +1,4 @@
-branchName = 'main'
+branchName = 'jadams/bisection-filter'
 
 library identifier: "zorg-shared-lib@${branchName}",
         retriever: modernSCM([
