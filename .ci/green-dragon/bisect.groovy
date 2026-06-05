@@ -40,7 +40,7 @@ pipeline {
             description: 'Repository to bisect'
         )
         booleanParam(name: 'RUN_TESTS', defaultValue: true, description: 'Run tests as part of bisection. Set to False if bisecting a build failure.')
-        string(name: 'LIT_TEST_FILTER', defaultValue: '', description: 'Specific LIT test to bisect (path relative to llvm-project root, e.g. clang/test/CodeGen/foo.c). Leave empty to use the full job result.')
+        string(name: 'LIT_TEST_FILTER', defaultValue: '', description: 'LIT test filter for bisection. For standard jobs: workspace-relative path passed directly to llvm-lit (e.g. llvm-project/clang/test/CodeGen/foo.c). For custom script jobs (e.g. clang-san-iossim): regex pattern exported as LIT_FILTER env var so lit filters within the custom script (e.g. deep_sleep_test). Leave empty to use the full job result.')
         string(name: 'TEST_REPEAT_COUNT', defaultValue: '3', description: 'Number of times to run the LIT test per commit. All runs must pass for the commit to be marked GOOD — a single failure marks it BAD.')
         string(name: 'SESSION_ID', description: 'Session ID to continue (optional)', defaultValue: '')
         booleanParam(name: 'DRY_RUN', defaultValue: false, description: 'Dry run mode')
