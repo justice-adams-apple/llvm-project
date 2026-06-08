@@ -10,11 +10,9 @@ library identifier: "zorg-shared-lib@${branchName}",
 clangPipeline(
     jobName: env.JOB_NAME,
     zorgBranch: branchName,
-    stages: ['checkout', 'build'],
     buildConfig: [
         stage: 1,
         build_type: 'cmake',
-        build_target: 'all',
         cmake_type: 'default',
         assertions: true,
         timeout: 360,
@@ -28,6 +26,8 @@ clangPipeline(
         ]
     ],
     testConfig: [
+        test_type: 'testlong',
+        timeout: 360,
         junit_patterns: [
             "clang-build/**/testresults.xunit.xml"
         ]
