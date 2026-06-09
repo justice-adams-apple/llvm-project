@@ -81,6 +81,20 @@ pipeline {
                         sh "git cat-file -e ${params.GOOD_COMMIT}"
                         sh "git cat-file -e ${params.BAD_COMMIT}"
 
+                        if (params.LIT_TEST_FILTER) {
+                            def repoPrefix = "${params.REPOSITORY}/"
+                            if (params.LIT_TEST_FILTER.startsWith(repoPrefix)) {
+                                def gitPath = params.LIT_TEST_FILTER.substring(repoPrefix.length())
+                                def existsAtBad = sh(
+                                    script: "git cat-file -e ${params.BAD_COMMIT}:${gitPath}",
+                                    returnStatus: true
+                                ) == 0
+                                if (!existsAtBad) {
+                                    error("LIT_TEST_FILTER '${params.LIT_TEST_FILTER}' does not exist at BAD_COMMIT ${params.BAD_COMMIT} — verify the test path is correct")
+                                }
+                            }
+                        }
+
                         echo "Repository setup complete"
                     }
                 }
