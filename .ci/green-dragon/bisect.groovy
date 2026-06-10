@@ -81,6 +81,15 @@ pipeline {
                         sh "git cat-file -e ${params.GOOD_COMMIT}"
                         sh "git cat-file -e ${params.BAD_COMMIT}"
 
+                        // Verify commit order. GOOD_COMMIT must be an ancestor of BAD_COMMIT
+                        def correctOrder = sh(
+                            script: "git merge-base --is-ancestor ${params.GOOD_COMMIT} ${params.BAD_COMMIT}",
+                            returnStatus: true
+                        ) == 0
+                        if (!correctOrder) {
+                            error("GOOD_COMMIT ${params.GOOD_COMMIT} is not an ancestor of BAD_COMMIT ${params.BAD_COMMIT}. Are the commit parameters incorrect?")
+                        }
+
                         if (params.LIT_TEST_FILTER) {
                             def repoPrefix = "${params.REPOSITORY}/"
                             if (params.LIT_TEST_FILTER.startsWith(repoPrefix)) {
